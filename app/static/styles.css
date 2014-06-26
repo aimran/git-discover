@@ -1,0 +1,363 @@
+@import url(http://fonts.googleapis.com/css?family=Droid+Serif);
+@import url(http://fonts.googleapis.com/css?family=Droid+Sans);
+
+@brand-info: #5bc0de;
+
+.navbar-default {
+  padding: 20px;
+  /* background: rgb(46, 155, 116); */
+  background: rgba(244,244,244,1);
+  border-radius: 0px;
+}
+.navbar-default .navbar-brand {
+    color: black;
+    /* font-family: "Droid Serif", serif;*/
+    font-family: "Arvo", serif;
+    font-size: 45px;
+}
+.navbar-default .navbar-brand:hover {
+    color: black;
+}
+
+.navbar-default .navbar-nav>li>a {
+    /*color: rgb(243, 207, 81);*/
+    color: rgba(17, 111, 201, 1);
+    font-family: "Droid Serif", serif;
+    font-size: 22px;
+}
+.navbar {
+   border: 0px;
+   margin: 0px;
+}
+
+label {
+  font-size: 20px;
+  color: #3276b1;
+}
+
+html, body {
+   /* background: rgb(93, 162, 137); */
+   /* background: rgba(17,111,201,1);*/
+  font: 13px Helvetica, arial, freesans, clean, sans-serif;
+  background: rgba(17,111,201,1);
+  font-family: "Droid Sans", sans-serif;
+  font-weight: bold;
+}
+
+.jumbotron {
+  /* background: rgb(293, 243, 215); */
+  /*background: rgba(244,244,244,1);*/
+  background: white;
+  height: 560px;
+  padding-top:30px;
+}
+
+#octo-speak {
+  background-color: rgba(244,244,244,1);
+  margin-top: 100px;
+  margin-left: 30px;
+  margin-right: 80px;
+  padding: 30px;
+  border-radius:10px;
+  height: 210px;
+  color: color;
+  font-family: "Droid Serif", serif;
+  font-size: 20px;
+  line-height: 28px;
+  
+}
+
+span#message{
+  font-family:"Geneva";
+}
+
+
+#connect-btn{
+  margin: 2px;
+  padding: 6px;
+  background: rgb(244,244,244);
+  border-color: 3px #ccc;
+  border-radius: 3px;
+  background-image: linear-gradient(#eee, #ddd);
+  background-repeat: repeat-x;
+}
+
+
+#message2 {
+  font-size: 16px;
+  color: black;
+  background: rgb(244,244,244);
+  font-family:"Courier";
+  font-weight: normal;
+  font-size:15px;
+}
+span#quote {
+  position: relative;
+  float: left;
+  padding-right: 15px;
+  padding-bottom: 5px;
+}
+
+.panel-title {
+  font-family: "Avoro", serif;
+  font-size: 26px;
+}
+
+.panel-success > .panel-footer {
+    color: #468847;
+    background-color: #dff0d8;
+    border-color: #d6e9c6;
+    width: 100px;
+}
+.panel-success > .table, .panel-heading > .table th {
+    margin:0px;
+    border: 0px;
+    width: 100px;
+}
+.search {
+  margin-left: auto;
+  margin-right:auto;
+  padding-top:10px;
+}
+
+label,
+select,
+button,
+input[type="button"],
+input[type="reset"],
+input[type="submit"],
+input[type="radio"],
+input[type="checkbox"] {
+  cursor: pointer;
+}
+
+
+.btn-primary {
+  /*color:#ffffff;
+  background-color:#006dcc;
+  text-shadow: 0 -1px 0 rgba(0,0,0,0.25);*/
+  color:#333;
+  background-color:rgb(244,244,244);
+  text-shadow:0 1px 0 rgba(255,255,255,0.9);
+  border-color:#ccc;
+  background-image: linear-gradient(#fcfcfc, #eee);
+  background-repeat: repeat-x;
+  border: 1px solid #d5d5d5;
+  border-radius: 3px;
+
+}
+
+.btn-primary:hover {
+   text-decoration: none;
+   color: #333;
+   background-color:#dddddd;
+   background-image: linear-gradient(#eee, #ddd);
+   background-repeat: repeat-x;
+   border-color: #ccc;
+}
+
+.input-lg {
+   font-weight: normal;
+   font-size: 20px;
+}
+
+.bootstrap-tagsinput {
+  font-weight: normal;
+  font-size: 20px; 
+}
+
+.search {
+  height: 250px;
+}
+
+.col-lg-8 {
+  padding-bottom:20px;
+}
+
+.btn-large {
+  padding: 12px 19px;
+  font-size: 21.5px;
+  margin-top: 20px;
+  
+}
+
+#octocat-giant {
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  width: 240px;
+}
+
+#user-profile{
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  padding: 3px;
+  margin-bottom: 5px;
+  width: 90px;
+}
+
+#accordion.panel-group {
+  margin-top: 40px;
+}
+
+form#searchForm {
+  margin-top: 50px;
+}
+
+#user-body {
+  background: white;
+  height: 80px;
+  margin: auto;
+}
+
+.panel-body {
+  height: 80px;
+}
+
+h6 {
+  font-family: "Droid Serif", serif;
+  font-size: 13px;
+}
+
+ul.talk-list {
+    list-style-type: none;
+    padding: 0px;
+}
+
+li.talk {
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee;
+    padding: 10px;
+}
+
+li.talk:hover {
+    background-color: #f8f8f8;
+}
+
+div.talk-header h2 {
+    font-size: 200%;
+    margin: 5px 0px 15px 0px;
+}
+
+div.talk-header h3 {
+    font-size: 115%;
+    margin: 0px 0px 10px 0px;
+}
+
+div.talk-header p {
+    font-size: 90%;
+    font-style: italic;
+    margin: 20px 0px 0px 0px;
+}
+
+div.talk-video {
+    width: 450px;
+    max-width: 450px;
+    display: inline-block;
+    margin: 5px;
+    vertical-align: middle;
+}
+
+div.talk-slides {
+    width: 450px;
+    max-width: 450px;
+    display: inline-block;
+    margin: 5px;
+    vertical-align: middle;
+}
+
+.flask-pagedown-preview {
+    margin-top: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+}
+
+.flask-pagedown-preview h1, .comment-body h1 {
+    font-size: 160%;
+}
+
+.flask-pagedown-preview h2, .comment-body h2 {
+    font-size: 140%;
+}
+
+.flask-pagedown-preview h3, .comment-body h3 {
+    font-size: 120%;
+}
+
+ul.comment-list {
+    list-style-type: none;
+    padding: 0px;
+}
+
+li.comment {
+    padding: 10px;
+}
+
+ul.comment-list li.comment:nth-child(odd)
+{
+    background-color: #eee;
+}
+
+ul.comment-list li.comment:nth-child(even)
+{
+    background-color: #fff;
+}
+
+.badge-red {
+    background-color:#d44;
+}
+
+
+#tooltip {
+position: absolute;
+width: 220px;
+height: auto;
+padding: 10px;
+background-color: white;
+-webkit-border-radius: 10px;
+-moz-border-radius: 10px;
+border-radius: 10px;
+-webkit-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+-moz-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+pointer-events: none;
+}
+ 
+#tooltip.hidden {
+display: none;
+}
+ 
+#tooltip p {
+margin: 0;
+font-family: sans-serif;
+font-size: 16px;
+line-height: 20px;
+}
+ 
+.axis text {
+font: 10px sans-serif;
+}
+ 
+.axis path,
+.axis line {
+fill: none;
+stroke: #000;
+shape-rendering: crispEdges;
+}
+ 
+.x.axis path {
+display: none;
+}
+ 
+rect {
+-moz-transition: all 0.3s;
+-o-transition: all 0.3s;
+-webkit-transition: all 0.3s;
+transition: all 0.5s;
+cursor:pointer;
+}
+ 
+search .select2-container{
+  display:block !important;
+}

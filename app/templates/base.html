@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
+
+    <link href='http://fonts.googleapis.com/css?family=Squada+One' rel='stylesheet' type='text/css'>
+    <link type="text/css" rel="stylesheet" href="http://fonts.googleapis.com/css?family=Arvo:400,700">
+    <title>git-discover</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="{{ url_for('static', filename='vendor/bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet">
+
+    <!-- Revealjs core CSS -->
+    <link href="{{ url_for('static', filename='vendor/components-revealjs/css/reveal.min.css') }}" rel="stylesheet">
+
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+
+
+    <!-- Page specific CSS files -->
+    {% block head %}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/jquery-ui.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/jquery.tagit.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap-tagsinput.css') }}">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/select2/3.4.8/select2.css">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',
+    filename='css/select2-bootstrap.css') }}">
+
+    {% endblock %}
+
+    <!-- Genericons core CSS -->
+    <link href="{{ url_for('static', filename='vendor/Genericons/genericons.css') }}" rel="stylesheet">
+
+    <!-- Your custom styles -->
+    <!-- <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet"> -->
+
+    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+  {% block navbar %}
+  <nav class="navbar navbar-default" role="navigation">
+  <div class="hidden-sm hidden-xs">
+    <img style="width:90px; position: absolute; top: 0px; right: 0px; z-index: 1;"
+    src="{{ url_for('static', filename='images/fork-me.png') }}">
+  </div>
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="{{ url_for('discover.index')
+          }}">git-discover</a>
+      </div>
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav">
+          <li><a href="{{ url_for('discover.about') }}">About</a></li>
+          <li><a href="{{ url_for('discover.slideshow') }}">Slides</a></li>
+          <li><a href="{{ url_for('discover.author') }}">Author</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+        </ul>
+      </div>
+    </div>
+  </nav>
+{% endblock %}
+
+{% block content %}
+<div class="jumbotron">
+<div class="container">
+    {% block page_content %}{% endblock %}
+</div>
+</div>
+{% endblock %}
+
+
+<!-- Bootstrap core JavaScript
+ ================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="{{ url_for('static', filename='vendor/jquery/dist/jquery.min.js') }}"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.12/jquery-ui.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="{{ url_for('static', filename='vendor/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/typeahead.bundle.js') }}" type="text/javascript" charset="utf-8"></script>
+<script src="//cdn.jsdelivr.net/select2/3.4.8/select2.js"></script>
+<script src="//cdn.jsdelivr.net/select2/3.4.8/select2.min.js"></script>
+
+<script src="http://d3js.org/d3.v3.min.js"></script>
+{% block scripts %}{% endblock %}
+ <script type="text/javascript">
+      // Dynamically add the bootstrap 'active' class to navbar links.
+      $(document).ready(function($){
+        var urlPath = window.location.pathname.split('/')[1];
+          $('.nav a[href="'+ urlPath +'"]').parent().addClass('active');
+      });
+    </script>
+
+ </body>
+</html>

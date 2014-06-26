@@ -1,0 +1,97 @@
+from flask import render_template, flash, request, redirect, url_for, abort
+from . import discover
+from .forms import SearchForm
+import pandas as pd
+import pandas.io.sql as psql
+import numpy as np
+import pymysql
+import operator
+
+cachedTable = None
+
+@discover.route('/', methods=['GET', 'POST'])
+def index():
+    form = SearchForm()
+    if form.validate_on_submit():
+        print "hey"
+        languages = form.languages
+        location = form.location
+        print location.data
+        flash('languages requested: '+languages.data + " for location: "+
+                location.data)
+        return redirect(url_for('.results', search=languages.data,
+                location=location.data))
+        #return redirect('/')
+    return render_template('discover/search.html', title='Search Form',
+            form=form)
+
+@discover.route('/slideshow')
+def slideshow():
+    return render_template('discover/slideshow.html')
+
+@discover.route('/results/<search>_<location>')
+def results(search, location):
+    search = search.split(',')
+    res = "<br>".join(map(lambda x: str(x), search))
+    print res
+    #if not cachedTable:
+    cnx = db_con()
+    all_langs = psql.read_sql(query_all_lang(), cnx)['language'].values
+    df = None
+    for lang in all_langs:
+        if df is None:
+            df = psql.read_sql(query_by_lang(lang), cnx)
+        else:
+            tmp = psql.read_sql(query_by_lang(lang), cnx)
+            df = df.merge(tmp, on='login', how="outer")
+            df.fillna(0, inplace=True)
+    df_all = df.set_index('login')
+    df_all = df_all.div(df_all.apply(lambda x: np.sqrt(x.dot(x)), axis=1),
+                            axis=0)
+    df_user = pd.DataFrame(index=['aimran99999'], columns=all_langs)
+    df_user = df_user.fillna(0)
+    print df_user.shape
+    print df_all.shape
+
+    N = len(search)
+    for l in search:
+        l = l.strip()
+        df_user[l] = 1.0/np.sqrt(N)
+    result = np.dot(df_all, df_user.T)
+    df_result = pd.DataFrame(result, index=df_all.index,
+                            columns=['result'])
+    output = df_result.sort(['result'], ascending=False)
+    data = output[:10].to_dict()['result']
+    data = sorted(data.iteritems(),
+            key=operator.itemgetter(1),
+            reverse=True)
+    return render_template('discover/table.html', data=data)
+
+
+
+    #return render_template("result.html",
+    #        title = "Results",
+    #        languages=languages)
+
+def db_con():
+    return pymysql.connect(host='localhost', user='root',
+                    passwd="mamu", db='git_talents')
+
+def query_by_lang(language):
+    query = """select login, count(language) as `{0}`
+               from repos
+               where language = \"{1}\"
+               group by login
+               order by `{0}`""".format(language,language)
+    return query
+
+def query_all_lang():
+    query = """ select DISTINCT(language)
+                FROM repos
+                WHERE language IS NOT NULL
+                GROUP BY language;
+            """.format()
+    return query
+
+
+

@@ -1,0 +1,165 @@
+{% extends "base.html" %}
+
+{% block page_content %}
+<div class="row">
+  <div class="col-md-4 col-md-offset-1">
+    <h6><i>Unlock the potential of <a href="http://github.com">Github!</a></i></h6>
+  </div>
+  <div class="col-md-5">
+    <div class="chart">
+      <div id="tooltip">
+        <img src="img/g3n1k.jpg" id="pic" style='width:4em;'/> &nbsp;
+        <span id="alfabet" style='line-height:3em; font:2em sans-serif;'>A</span>
+        <p><span id="value">100</span></p>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+<script src="http://d3js.org/d3.v3.min.js"></script>
+<script>
+var margin = {top: 20, right: 30, bottom: 30, left: 100},
+width = 300 - margin.left - margin.right,
+height = 300 - margin.top - margin.bottom;
+ 
+var y = d3.scale.ordinal()
+  .rangeRoundBands([0, height], .1);
+ 
+var x = d3.scale.linear()
+  .range([0, width]);
+ 
+var xAxis = d3.svg.axis()
+.scale(x)
+  .orient("bottom");
+ 
+var yAxis = d3.svg.axis()
+.scale(y)
+.orient("left");
+ 
+var chart = d3.select(".chart").append("svg:svg")
+.attr("width", width + margin.left + margin.right)
+.attr("height", height + margin.top + margin.bottom)
+.append("g")
+.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+var data;
+
+d3.json("{{url_for('discover.data')}}", function(error, json) {
+
+    if (error) return console.warn(error);
+
+    console.log(json);
+    data = json;
+
+    y.domain(data.map(function(d) { console.log(d.letter);return d.letter; }));
+
+    x.domain([0, d3.max(data, function(d) { return d.frequency; })]);
+
+    //chart.append("g")
+    //.attr("class", "x axis")
+    //.attr("transform", "translate(0," + height + ")")
+    //.call(xAxis);
+
+    //chart.append("g")
+    //.attr("class", "y axis")
+    //.call(yAxis);
+
+    chart.selectAll(".bar")
+      .data(data)
+      .enter()
+      .append("rect")
+      .attr("class", "bar")
+      .attr("id", function(d) { return 'bar'+d.letter;})
+      .attr("y", function(d) { return y(d.letter); })
+      .attr("x", function(d) { return 0; })
+      .attr("width", function(d) { return x(d.frequency); })
+      .attr("height", y.rangeBand())
+      .attr("fill", function(d) { return "rgb(" + Math.round(d.frequency * 1000) + ",10, 100)"; })
+
+      .on("click", function(d){
+          window.open(d.fb, '_blank', 'location=yes,height=600,width=960,scrollbars=yes,status=yes');
+          })
+
+    .on("mouseover", function(d) {
+        d3.select(this)
+        .transition()
+        .duration(50)
+        .attr("fill", "#CC0000");
+
+        //Get this bar's x/y values, then augment for the tooltip
+        var yPosition = parseFloat(d3.select(this).attr("y")) + y.rangeBand() / 2;
+        var xPosition = parseFloat(d3.select(this).attr("x")) / 2 + height / 2;
+        console.log("here");
+
+        //Update the tooltip position and value
+        d3.select("#tooltip")
+        .style("left", xPosition + "px")
+        .style("top", yPosition + "px")
+        .select("#value")
+        .text(d.frequency);
+
+        d3.select("#alfabet")
+        .text(d.name);
+
+        d3.select("#pic")
+          .attr("src","img/"+d.pic);
+
+        //Show the tooltip
+        d3.select("#tooltip").classed("hidden", false);
+    })
+
+    .on("mouseout", function() {
+        d3.select(this)
+        .transition()
+        .delay(100)
+        .duration(250)
+        .attr("fill", function(d) { return "rgb(" + Math.round(d.frequency * 1000) + ",10, 100)"; })
+
+        //Hide the tooltip
+        d3.select("#tooltip").classed("hidden", true);
+
+        })
+    .append("title")
+      .text(function(d) {  return d.letter + " value is " + d.frequency;});
+    ;
+
+});
+ 
+// function generate bar
+function random_bar(data){
+ 
+d3.selectAll(".bar")
+.data(data)
+.transition()
+//.delay(500)
+.duration(1000)
+.ease("linear")
+.attr("fill", function(d) { return "rgb(" + Math.round(d.frequency * 1000) + ",10, 100)"; })
+.attr("x", function(d) { return x(d.letter); })
+.attr("y", function(d) { return y(d.frequency); })
+.attr("height", function(d) { return height - y(d.frequency); })
+;
+}
+ 
+// random data
+d3.select("button")
+.on("click", function() {
+ 
+//console.log(data.length);
+var numValues = data.length;
+ 
+for (var i = 0; i < numValues; i++) {
+ 
+var newNumber = Math.random() * 0.12 ; //New random integer (0-25)
+data[i].frequency = newNumber;//Add new number to array
+}
+ 
+//console.log(data);
+random_bar(data);
+});
+ 
+</script>
+{% endblock %}

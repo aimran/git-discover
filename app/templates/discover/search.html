@@ -1,0 +1,105 @@
+<!-- extend from base layout -->
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block page_content %}
+
+<!--{{ wtf.quick_form(form) }} -->
+<div class="row" style="margin-top:25px;">
+
+  <div class="col-sm-3 col-sm-offset-1">
+    <a href="/"><img id="octocat-giant" src="static/images/prefessor_cat.png"></img></a>
+    <!-- <h4><i>Unlock the potential of <a
+          href="http://github.com">Github!</a></i></h4> -->
+  </div>
+
+  <div class="col-sm-5 col-sm-offset-3">
+    <search>
+      <form role="form" method="post" id="searchForm" action="{{url_for('discover.index')}}">
+
+        <div class="form-group">
+            {{ form.hidden_tag() }}
+            <!-- <label class="col-lg control-label">{{ form.languages.label }}</label> -->
+            <div class="select2-container select2-container-multi input-lg"
+              style="display:block;">
+              <input id="language-input"  type="text"  name="languages"
+              data-toggle="tooltip" title="Enter comma separated list of languages"
+              type="text"
+              placeholder="Search languages">
+            </div>
+        </div>
+
+        <!--
+        <div class="form-group">
+            {{form.hidden_tag() }}
+            <div class="select2-container input-lg">
+              <input type="hidden" id="location-input"
+              type="text" name="location"
+              data-toggle="tooltip" title="Search for your city of interest"
+              type="text" placeholder="Type location">
+            </div>
+        </div>
+    
+      -->
+
+
+        <div class="form-group">
+          <div class="text-center">
+            <button type="submit" class="btn btn-large btn-primary"><font
+                face="geneva"><i class="fa fa-search fa-large"></i> Discover!</font>
+            </button>
+          </div>
+        </div>
+
+      </form>
+
+    </search>
+  </div>
+</div>
+<div class="row">
+    <div class="col-md-7 hidden-sm hidden-xs" style="margin-top:40px;">
+      <span id="quote" style=" float: left: padding: 10px;">
+        <i class="fa fa-quote-left fa-3x"></i>
+      </span>
+      <span id="message" style="display:block; line-height:35px;font-weight: bold;">
+        <h3>Discover outstanding contributors
+          on <a style="font-size: 35px;" href="http://github.com">Github</a>, the most popular
+        code repository in the world! </h3><br>
+      </span>
+      <span id="message2">
+        Start by entering language(s) to explore the top users based on their preferences,
+        content popularity and over-all activity on Github.
+      </span>
+    </div>
+</div>
+
+
+
+{% endblock %}
+
+{%block scripts %}
+{{ super() }}
+<script type=text/javascript>
+$(function(){
+   $('#language-input').select2({
+      createSearchChoice: function() { return null; },
+      tags:["Python", "C", "C++", "Java", "Scala", "SQL"],
+      width: "copy",
+      tokenSeparators: [",", " "],
+      matcher: function(term, text) {
+      console.log(term, text);
+      return text.indexOf(term)==0;
+      }
+    });
+   //$('#location-input').select2({
+   //   multiple: false,
+   //   data:[{id:0,text:"San Francisco"},{id:1,text:"London"}, {id:2, text:"New York"}]
+   // });
+
+   //Disable location feature for now!
+   //$('#location-input').select2("enable",false);
+});
+</script>
+
+
+{% endblock %}

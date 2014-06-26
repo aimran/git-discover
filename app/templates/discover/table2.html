@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <div id="wrap">
+    <div class="container">
+      <div id="table">
+        <div class="table-responsive">
+          <table class="table table-bordered table-condensed table-striped">
+            <thead>
+              <th></th>
+              <th>User</th>
+              <th>Language Score</th>
+              <th>Following Score</th>
+              <th>Followe Score</th>
+            </thead>
+            <tbody>
+              {% for key, value in data.iteritems() %}
+              <tr>
+                <td>{{loop.index}}</td>
+                <td class="{{key}}">{{key}}</td>
+                <td>{{'%0.2f' % value['result']|float}}</td>
+                <td>{{'%0.2f' % value['pagerank_flwg']|float}}</td>
+                <td>{{'%0.2f' % value['pagerank_flwr']|float}}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+

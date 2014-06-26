@@ -1,0 +1,290 @@
+{% extends "base.html" %}
+
+{% block page_content %}
+<div class="row">
+  <div class="col-md-5">
+    <div id="octo-speak">
+      Based on your preferences for <i>Python, C++ and C</i>,
+      here are the top 5 contributors that may interest you.
+    </div>
+  </div>
+  <div class="col-md-7">
+    <span id="scorePanel">
+
+    <div class="panel-group" id="accordion">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h4 class="panel-title" style="font-weight: bold">aimran <i class="fa
+              fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i>
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+              <i class="indicator fa fa-chevron-down pull-right"></i>
+            </a>
+          </h4>
+        </div>
+        <div id="collapseOne" class="panel-collapse collapse in">
+          <div class="panel-body">
+
+            <div class="row">
+              <div class="col-sm-7" style="background: white;">
+                <span id="user-body">
+                  <h4>Name: Asif Imran</h4>
+                  E-mail: erd@gmail.com<br>
+                  Location: Palo Alto, CA<br>
+                  Language of <i>choice</i>: Python<br>
+                  Most popular repo: scikit-learn
+                  <h6>Active Since: July 10, 2010</h6>
+                </span>
+              </div>
+
+              <div class="col-sm-3 pull-right">
+                <div class="col-sm-12">
+                <img class="img-rounded bg-info" id="user-profile" style=""
+                src="https://avatars.githubusercontent.com/u/4584144??">
+                </div>
+                <div class="col-sm-12" style="background: white;">
+                  <div class="text-center">
+                  <div id="connect-btn">
+                    <i class="fa fa-github"></i>&nbsp;<a
+                      href="github.com/aimran" style="text-decoration: none;
+                    color: #428bca;">Connect</a>
+                  </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+
+            </div>
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    </span>
+
+  </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+<script src="http://d3js.org/d3.v3.min.js"></script>
+<script>
+
+function toggleChevron(e) {
+    $(e.target)
+        .prev('.panel-heading')
+        .find("i.indicator")
+        .toggleClass('fa-chevron-down fa-chevron-up');
+}
+$('#accordion').on('hidden.bs.collapse', toggleChevron);
+$('#accordion').on('shown.bs.collapse', toggleChevron);
+
+
+$(function() {
+    $.getJSON("{{url_for('discover.data')}}", function(data) {
+      for(var i=0; i<4; i++) {
+     // console.log(data[i]);
+      //$("#scorePanel").append("<p>"+data[i].userid+"</p");
+
+      d = data[i];
+
+      var accord = $("#accordion");
+
+      var out_panel = $("<div>").addClass("panel panel-default");
+
+      var panel_user = $("<div>").addClass("col-sm-7").css(
+        "background","white").append($("<span>").attr("id","user-body").append($("<h4>").append
+        ("Name: Asif Imran")).append("Email: blah@gmail.com <br>").append(
+        "Location: Somewhere<br>").append("Language of choice: Java <br>").append(""))
+
+      
+      /*
+      var pane_user_profile = $("<div>").addClass("col-sm-3 \
+        pull-right").append($("<div>").addClass("col-sm-12").append($("<img>").addClass(
+      "img-rounder bg-info").attr("id","user-profile").css("style":"").attr("src","https://avatars.githubusercontent.com/u/4584144??")).append());
+        
+        );
+        */
+      var panel_body = $("<div>").addClass("row");
+      panel_body.append(panel_user);
+      //panel_body.append(pane_user_profile);
+
+      out_panel.append(
+        $("<div>").addClass("panel-heading").append(
+          $("<h4>").addClass("panel-title").append("  "+d.userid).append(
+          $("<a>").attr("data-toggle","collapse").attr({
+            "data-parent":"#accordion", "href":"#collapse_"+i}).append(
+                  $("<i>").addClass("indicator fa fa-chevron-down pull-right")
+                )
+          )));
+
+      out_panel.append($("<div>").attr("id",
+          "collapse_"+i).addClass("panel-collapse \
+            collapse").append($("<div>").addClass("panel-body").append(panel_body)
+            ));
+
+
+
+        /*
+        .attr("collapse",i).addClass("panel-collapse
+          collapse").append($("<div>").addClass("panel-body"));
+          */
+      //var final_panel = out_panel.append(in_panel);
+
+      $("#scorePanel").append(accord.append(out_panel));
+
+      }
+      });
+    });
+
+
+
+/*
+var margin = {top: 20, right: 30, bottom: 30, left: 100},
+width = 300 - margin.left - margin.right,
+height = 300 - margin.top - margin.bottom;
+
+var y = d3.scale.ordinal()
+  .rangeRoundBands([0, height], .1);
+
+var x = d3.scale.linear()
+  .range([0, width]);
+
+var xAxis = d3.svg.axis()
+.scale(x)
+  .orient("bottom");
+
+var yAxis = d3.svg.axis()
+.scale(y)
+.orient("left");
+
+var chart = d3.select(".chart").append("svg:svg")
+.attr("width", width + margin.left + margin.right)
+.attr("height", height + margin.top + margin.bottom)
+.append("g")
+.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+var data;
+
+d3.json("{{url_for('discover.data')}}", function(error, json) {
+
+    if (error) return console.warn(error);
+
+    console.log(json);
+    data = json;
+
+    y.domain(data.map(function(d) { console.log(d.letter);return d.letter; }));
+
+    x.domain([0, d3.max(data, function(d) { return d.frequency; })]);
+
+    //chart.append("g")
+    //.attr("class", "x axis")
+    //.attr("transform", "translate(0," + height + ")")
+    //.call(xAxis);
+
+    //chart.append("g")
+    //.attr("class", "y axis")
+    //.call(yAxis);
+
+    chart.selectAll(".bar")
+      .data(data)
+      .enter()
+      .append("rect")
+      .attr("class", "bar")
+      .attr("id", function(d) { return 'bar'+d.letter;})
+      .attr("y", function(d) { return y(d.letter); })
+      .attr("x", function(d) { return 0; })
+      .attr("width", function(d) { return x(d.frequency); })
+      .attr("height", y.rangeBand())
+      .attr("fill", function(d) { return "rgb(" + Math.round(d.frequency * 1000) + ",10, 100)"; })
+
+      .on("click", function(d){
+          window.open(d.fb, '_blank', 'location=yes,height=600,width=960,scrollbars=yes,status=yes');
+          })
+
+    .on("mouseover", function(d) {
+        d3.select(this)
+        .transition()
+        .duration(50)
+        .attr("fill", "#CC0000");
+
+        //Get this bar's x/y values, then augment for the tooltip
+        var yPosition = parseFloat(d3.select(this).attr("y")) + y.rangeBand() / 2;
+        var xPosition = parseFloat(d3.select(this).attr("x")) / 2 + height / 2;
+        console.log("here");
+
+        //Update the tooltip position and value
+        d3.select("#tooltip")
+        .style("left", xPosition + "px")
+        .style("top", yPosition + "px")
+        .select("#value")
+        .text(d.frequency);
+
+        d3.select("#alfabet")
+        .text(d.name);
+
+        d3.select("#pic")
+          .attr("src","img/"+d.pic);
+
+        //Show the tooltip
+        d3.select("#tooltip").classed("hidden", false);
+    })
+
+    .on("mouseout", function() {
+        d3.select(this)
+        .transition()
+        .delay(100)
+        .duration(250)
+        .attr("fill", function(d) { return "rgb(" + Math.round(d.frequency * 1000) + ",10, 100)"; })
+
+        //Hide the tooltip
+        d3.select("#tooltip").classed("hidden", true);
+
+        })
+    .append("title")
+      .text(function(d) {  return d.letter + " value is " + d.frequency;});
+    ;
+
+});
+
+// function generate bar
+function random_bar(data){
+
+d3.selectAll(".bar")
+.data(data)
+.transition()
+//.delay(500)
+.duration(1000)
+.ease("linear")
+.attr("fill", function(d) { return "rgb(" + Math.round(d.frequency * 1000) + ",10, 100)"; })
+.attr("x", function(d) { return x(d.letter); })
+.attr("y", function(d) { return y(d.frequency); })
+.attr("height", function(d) { return height - y(d.frequency); })
+;
+}
+
+// random data
+d3.select("button")
+.on("click", function() {
+
+//console.log(data.length);
+var numValues = data.length;
+
+for (var i = 0; i < numValues; i++) {
+
+var newNumber = Math.random() * 0.12 ; //New random integer (0-25)
+data[i].frequency = newNumber;//Add new number to array
+}
+
+//console.log(data);
+random_bar(data);
+});
+*/
+
+
+</script>
+{% endblock %}

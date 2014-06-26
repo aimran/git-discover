@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+
+{% block page_content %}
+<div class="row">
+
+  <div class="col-md-5">
+    <div id="octo-speak">
+      Based on your preferences for <i>{{langs|join(', ')}}</i>,
+      here are the top 5 contributors that may interest you...
+    </div>
+  </div>
+
+  <div class="col-md-7">
+    <scorePanel>
+      <div class="panel-group" id="accordion">
+        {% for d in data %}
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h4 class="panel-title" style="font-weight: bold">{{d.userid}}
+              <a data-toggle="collapse" data-parent="#accordion"
+                href="#collapse_{{loop.index}}">
+                <i class="indicator fa fa-chevron-{% if loop.index == 1 %}up {%
+                else%}down{%endif%} pull-right"></i>
+              </a>
+            </h4>
+          </div>
+          <div id="collapse_{{loop.index}}" class="panel-collapse collapse {% if loop.index ==
+            1 %} in {% endif %}">
+            <div class="panel-body">
+
+              <div class="row">
+                <div class="col-sm-7" style="background: white;">
+                  <span id="user-body">
+                    <h4>Name: {{d.name}} <div id="stars" class="pull-right">{% for i in
+                      range(d.rating) %}<i class="fa fa-star"></i>{% endfor
+                      %}</div></h4>
+                    E-mail: {{d.email | e}}<br>
+                    Location: {{d.location |e }}<br>
+                    Language of <i>choice</i>: {{d.lang}}<br>
+                    Most popular repo: {{d.poprepo}}
+                    <h6>Active Since: {{d.created | datetimefilter}}</h6>
+                  </span>
+                </div>
+
+                <div class="col-sm-3 pull-right">
+                  <div class="col-sm-12">
+                    <img class="img-rounded bg-info" id="user-profile" style=""
+                    src="{{d.avatar}}">
+                  </div>
+                  <div class="col-sm-12" style="background: white;">
+                    <div class="text-center">
+                      <div id="connect-btn">
+                        <i class="fa fa-github"></i>&nbsp;<a
+                          href="http://github.com/{{d.userid}}" style="text-decoration: none;
+                          color: #428bca;">Connect</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    <scorePanel>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+<script src="http://d3js.org/d3.v3.min.js"></script>
+<script>
+
+function toggleChevron(e) {
+    $(e.target)
+        .prev('.panel-heading')
+        .find("i.indicator")
+        .toggleClass('fa-chevron-down fa-chevron-up');
+}
+$('#accordion').on('hidden.bs.collapse', toggleChevron);
+$('#accordion').on('shown.bs.collapse', toggleChevron);
+
+
+$(function() {
+
+
+    });
+
+
+</script>
+{% endblock %}
