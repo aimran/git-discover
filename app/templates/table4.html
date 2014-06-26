@@ -85,7 +85,7 @@ $('#accordion').on('shown.bs.collapse', toggleChevron);
 
 
 $(function() {
-    $.getJSON("{{url_for('discover.data')}}", function(data) {
+    $.getJSON("{{url_for('data')}}", function(data) {
       for(var i=0; i<4; i++) {
      // console.log(data[i]);
       //$("#scorePanel").append("<p>"+data[i].userid+"</p");
@@ -170,7 +170,7 @@ var chart = d3.select(".chart").append("svg:svg")
 
 var data;
 
-d3.json("{{url_for('discover.data')}}", function(error, json) {
+d3.json("{{url_for('data')}}", function(error, json) {
 
     if (error) return console.warn(error);
 

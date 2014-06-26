@@ -1,18 +1,32 @@
+# imports
 from flask import Flask
-from flask.ext.bootstrap import Bootstrap
-from flask.ext.sqlalchemy import SQLAlchemy
-from config import config
+from flask_bootstrap import Bootstrap
 
-bootstrap = Bootstrap()
+# Creates our application.
+app = Flask(__name__)
+Bootstrap(app)
 
-def create_app(config_name):
-    app = Flask(__name__)
-    app.config.from_object(config[config_name])
+# Development configuration settings
+# WARNING - these should not be used in production
+app.config.from_pyfile('settings/development.cfg')
 
-    bootstrap.init_app(app)
+# Production configuration settings
+# To have these override your development settings,
+# you'll need to set your environment variable to
+# the file path:
+# export PRODUCTION_SETTINGS=/path/to/settings.cfg
+#app.config.from_envvar('PRODUCTION_SETTINGS', silent=True)
 
-    from .discover import discover as discover_blueprint
-    app.register_blueprint(discover_blueprint)
+# Application DEBUG - should be True in development
+# and False in production
+app.debug = app.config["DEBUG"]
 
-    return app
+# DATABASE SETTINGS
+host = app.config["DATABASE_HOST"]
+port = app.config["DATABASE_PORT"]
+user = app.config["DATABASE_USER"]
+passwd = app.config["DATABASE_PASSWORD"]
+db = app.config["DATABASE_DB"]
 
+
+from app import views

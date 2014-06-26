@@ -72,7 +72,7 @@ var callback = function (data) {
     .on("mousedown", show_info);
 };
 
-d3.json("{{url_for('discover.data')}}", callback);
+d3.json("{{url_for('data')}}", callback);
 
 </script>
 {% endblock %}

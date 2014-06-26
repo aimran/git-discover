@@ -47,7 +47,7 @@ var chart = d3.select(".chart").append("svg:svg")
 
 var data;
 
-d3.json("{{url_for('discover.data')}}", function(error, json) {
+d3.json("{{url_for('data')}}", function(error, json) {
 
     if (error) return console.warn(error);
 
