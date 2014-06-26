@@ -235,7 +235,7 @@ def results2(search, location):
 
 def db_con():
     return pymysql.connect(host='localhost', user='root',
-                    passwd="mamu", db='git_talents')
+                    passwd="", db='git_talents')
 
 def query_by_lang(language):
     query = """select login, count(language) as `{0}`
