@@ -3,7 +3,7 @@
 {% block page_content %}
 <div class="row">
 
-  <div class="col-md-5">
+  <div class="col-md-5 hidden-sm hidden-xs hidden-md">
     <div id="octo-speak">
       {% if data %}
       Based on your preferences for <i>{{langs|join(', ')}}</i>
@@ -37,16 +37,18 @@
                   <span id="user-body">
                     <h4>Name: {{d.name}} </h4>
                     <div class="email"><span>Email: </span><span
-                        style="color:black">{% if d.email == ''%} <i>not
+                        style="color:black; font-weight:normal;">{% if d.email == ''%} <i>not
                         available</i> {%else %}{{d.email | e}}{% endif %}</span></div>
-                  <div class="location"> <span>Location:</span><span style="color:black"> {% if d.location == ''%}
+                  <div class="location"> <span>Location:</span><span
+                      style="color:black; font-weight: normal;"> {% if d.location == ''%}
                       <i>not available</i>{%else%}{{d.location |e}}{% endif
                       %}</span></div>
                   <div class="language"><span>Primarily writes in: </span><span
                       style="color:rgba(17,111,201,1)">{{d.pref_langs |
                     join(", ")}}</span></div>
-                <div class="pop-repo"><span>Most popular repo: </span><span style="color:black">
-                      <i>{{d.pop_repo.name}}</i>
+                <div class="pop-repo"><span>Most popular repo: </span><span
+                    style="color:black; font-weight:normal;">
+                      <b>{{d.pop_repo.name}}</b>
                       in {{d.pop_repo.language}}</span></div>
                       <h6>Active Since: {{d.start_date}}</h6>
                   </span>
