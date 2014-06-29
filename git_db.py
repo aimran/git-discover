@@ -32,14 +32,21 @@ class GitDB(object):
         self.min_rpm = min_rpm
         self.pub_repo_count_frame = self.get_pub_repo_count()
         self.all_languages = self.get_all_langs() #returns an array!!
-        self.lang_match_frame = self.get_user_langs()
+        #self.lang_match_frame = self.get_user_langs()
+
+#    def query_by_lang(self, language):
+#        query = """select login, count(language) as `{0}`
+#               from repos
+#               where language = \"{1}\"
+#               group by login
+#               order by `{0}`""".format(language,language)
+#        return query
 
     def query_by_lang(self, language):
-        query = """select login, count(language) as `{0}`
-               from repos
-               where language = \"{1}\"
-               group by login
-               order by `{0}`""".format(language,language)
+        query = """ select distinct(login)
+                from repos
+                where language = \"{0}\";
+            """.format(language)
         return query
 
     def query_all_lang(self):
@@ -188,6 +195,10 @@ class GitDB(object):
                 where login='{0}';
                 """.format(login)
         return query
+
+    def get_users_by_language(self, language):
+        result = psql.read_sql(self.query_by_lang(language), self.cnx)
+        return result
 
 
     def get_user_info(self, login):

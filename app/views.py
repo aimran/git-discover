@@ -42,7 +42,7 @@ def generate_report(login):
     pop_repo, lang = db.get_user_popular_repo(login) or ('','')
     report['pop_repo'] = {'name':pop_repo, 'language':lang}
 
-    pref_langs = db.get_user_pref_lang(login)[:4]
+    pref_langs = db.get_user_pref_lang(login)[:3]
     report['pref_langs'] = []
     for l in pref_langs:
         report['pref_langs'].append(l[0])

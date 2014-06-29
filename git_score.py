@@ -26,20 +26,32 @@ class GitScore(object):
         self.result_frame = self._collect_frames()
 
     def get_lang_match(self, search=['Python','C++']):
-        all_lang_frame = self.db.lang_match_frame
-        search_frame = pd.DataFrame(index=['0xthis0xcant0xwork'],
-                columns= self.db.all_languages)
-        search_frame.fillna(0, inplace=True)
-        N = len(search)
-        if N < 0:
-            print "fail... must have atleast one language to search"
-        for l in search:
-            search_frame[l] = 1.0/np.sqrt(N)
-        result_frame = all_lang_frame.dot(search_frame.T.values).copy()
-        result_frame = result_frame[result_frame[0]>0]
-        result_frame.sort(0, ascending=False, inplace=True)
-
+        result_frame = None
+        for lang in search:
+            if result_frame is None:
+                result_frame = self.db.get_users_by_language(lang)
+            else:
+                tmp = self.db.get_users_by_language(lang)
+                result_frame = result_frame.merge(tmp, how='inner', copy=False)
+                result_frame.dropna(inplace=True)
+        result_frame.set_index('login', inplace=True)
         return result_frame
+
+#    def get_lang_match(self, search=['Python','C++']):
+#        all_lang_frame = self.db.lang_match_frame
+#        search_frame = pd.DataFrame(index=['0xthis0xcant0xwork'],
+#                columns= self.db.all_languages)
+#        search_frame.fillna(0, inplace=True)
+#        N = len(search)
+#        if N < 0:
+#            print "fail... must have atleast one language to search"
+#        for l in search:
+#            search_frame[l] = 1.0/np.sqrt(N)
+#        result_frame = all_lang_frame.dot(search_frame.T.values).copy()
+#        result_frame = result_frame[result_frame[0]>0]
+#        result_frame.sort(0, ascending=False, inplace=True)
+#
+#        return result_frame
 
 
     def _collect_frames(self):
