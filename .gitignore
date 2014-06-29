@@ -1,6 +1,8 @@
+access_keys*
 config.py
 *.py[cod]
 *.so
+*.pcl
 #
 # Packages
 *.egg

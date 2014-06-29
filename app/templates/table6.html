@@ -13,10 +13,10 @@
   <div class="col-md-7">
     <scorePanel>
       <div class="panel-group" id="accordion">
-        {% for d in data %}
+        {% for k, d in data.iteritems() %}
         <div class="panel panel-default">
           <div class="panel-heading">
-            <h4 class="panel-title" style="font-weight: bold">{{d.userid}}
+            <h4 class="panel-title" style="font-weight: bold">{{k}}
               <a data-toggle="collapse" data-parent="#accordion"
                 href="#collapse_{{loop.index}}">
                 <i class="indicator fa fa-chevron-{% if loop.index == 1 %}up {%
@@ -32,26 +32,28 @@
                 <div class="col-sm-7" style="background: white;">
                   <span id="user-body">
                     <h4>Name: {{d.name}} <div id="stars" class="pull-right">{% for i in
-                      range(d.rating) %}<i class="fa fa-star"></i>{% endfor
+                      range(5) %}<i class="fa fa-star"></i>{% endfor
                       %}</div></h4>
-                    E-mail: {{d.email | e}}<br>
-                    Location: {{d.location |e }}<br>
-                    Language of <i>choice</i>: {{d.lang}}<br>
-                    Most popular repo: {{d.poprepo}}
-                    <h6>Active Since: {{d.created | datetimefilter}}</h6>
+                  E-mail: {% if d.email == ''%} <i>not available</i> {%else %}{{d.email
+                  | e}}{% endif %}<br>
+                  Location: {% if d.location == ''%} <i>not available</i>{%else%}{{d.location |e
+                  }}{% endif %}<br>
+                          Primarily writes in: {{d.pref_langs | join(", ")}}<br>
+                          Most popular repo: {{d.pop_repo.name}} in {{d.pop_repo.language}}
+                          <h6>Active Since: {{d.start_date}}</h6>
                   </span>
                 </div>
 
                 <div class="col-sm-3 pull-right">
                   <div class="col-sm-12">
                     <img class="img-rounded bg-info" id="user-profile" style=""
-                    src="{{d.avatar}}">
+                    src="{{d.avatar_url}}">
                   </div>
                   <div class="col-sm-12" style="background: white;">
                     <div class="text-center">
                       <div id="connect-btn">
                         <i class="fa fa-github"></i>&nbsp;<a
-                          href="http://github.com/{{d.userid}}" style="text-decoration: none;
+                          href="http://github.com/{{k}}" style="text-decoration: none;
                           color: #428bca;">Connect</a>
                       </div>
                     </div>

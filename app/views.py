@@ -9,8 +9,12 @@ import pymysql
 import operator
 import networkx as nw
 import json
+from collections import OrderedDict
 
-cachedTable = None
+from git_db import GitDB
+from git_score import GitScore
+
+db = GitDB()
 
 @app.route('/')
 @app.route('/', methods=['GET', 'POST'])
@@ -21,12 +25,43 @@ def index():
         languages = form.languages
         #location = form.location
         #print location.data
-        return redirect(url_for('.results', search=languages.data,
-                location="blah"))
+        return redirect(url_for('.results', search=languages.data))
         #return redirect('/')
     return render_template('search.html', title='Search Form',
             form=form)
 
+def generate_report(login):
+    report = {}
+    name, email, location, start_date, avatar = db.get_user_info(login)
+    report['name'] = name or ''
+    report['email'] = email or ''
+    report['location'] = location or ''
+    report['start_date'] = start_date.strftime("%B %d, %Y")
+    report['avatar_url'] = avatar
+
+    pop_repo, lang = db.get_user_popular_repo(login) or ('','')
+    report['pop_repo'] = {'name':pop_repo, 'language':lang}
+
+    pref_langs = db.get_user_pref_lang(login)[:4]
+    report['pref_langs'] = []
+    for l in pref_langs:
+        report['pref_langs'].append(l[0])
+
+    return report
+
+
+@app.route('/results/<search>')
+def results(search):
+    search = search.split(',')
+    res = "<br>".join(map(lambda x: str(x), search))
+    score = GitScore(db)
+    final_score = score.get_final_score(search).sort("final_score", ascending=False)
+    report = OrderedDict()
+    for gitlogin in final_score.index[:5]:
+        report[gitlogin] = generate_report(gitlogin)
+
+    return render_template('table6.html', langs=search, data=report)
+    #return render_template('table.html', data=data)
 
 @app.route('/author')
 def author():
@@ -39,47 +74,6 @@ def about():
 @app.route('/slideshow')
 def slideshow():
     return render_template('slideshow.html')
-
-@app.route('/results/<search>_<location>')
-def results(search, location):
-    search = search.split(',')
-    res = "<br>".join(map(lambda x: str(x), search))
-    print res
-    #if not cachedTable:
-    cnx = db_con()
-    all_langs = psql.read_sql(query_all_lang(), cnx)['language'].values
-    df = None
-#    for lang in all_langs:
-#        if df is None:
-#            df = psql.read_sql(query_by_lang(lang), cnx)
-#        else:
-#            tmp = psql.read_sql(query_by_lang(lang), cnx)
-#            df = df.merge(tmp, on='login', how="outer")
-#            df.fillna(0, inplace=True)
-#    df_all = df.set_index('login')
-#    df_all = df_all.div(df_all.apply(lambda x: np.sqrt(x.dot(x)), axis=1),
-#                            axis=0)
-
-#    df_user = pd.DataFrame(index=['aimran99999'], columns=all_langs)
-#    df_user = df_user.fillna(0)
-#    print df_user.shape
-#    print df_all.shape
-#
-#    N = len(search)
-#    for l in search:
-#        l = l.strip()
-#        df_user[l] = 1.0/np.sqrt(N)
-#    result = np.dot(df_all, df_user.T)
-#    df_result = pd.DataFrame(result, index=df_all.index,
-#                            columns=['result'])
-#    output = df_result.sort(['result'], ascending=False)
-#
-#    data = output[:10].to_dict()['result']
-#    data = sorted(data.iteritems(),
-#            key=operator.itemgetter(1),
-#            reverse=True)
-    return render_template('table6.html', langs=search, data=data())
-    #return render_template('table.html', data=data)
 
 @app.route('/table4')
 def result3():
