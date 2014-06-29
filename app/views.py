@@ -14,19 +14,16 @@ from collections import OrderedDict
 from git_db import GitDB
 from git_score import GitScore
 
-db = GitDB()
+db = GitDB(min_repo=6, max_repo=90, min_rpm=1/6.)
 
 @app.route('/')
 @app.route('/', methods=['GET', 'POST'])
 def index():
     form = SearchForm(csrf_enabled=False)
     if form.validate_on_submit():
-        print "hey"
         languages = form.languages
         #location = form.location
-        #print location.data
         return redirect(url_for('.results', search=languages.data))
-        #return redirect('/')
     return render_template('search.html', title='Search Form',
             form=form)
 
@@ -57,7 +54,7 @@ def results(search):
     score = GitScore(db)
     final_score = score.get_final_score(search).sort("final_score", ascending=False)
     report = OrderedDict()
-    for gitlogin in final_score.index[:5]:
+    for gitlogin in final_score.index[:35]:
         report[gitlogin] = generate_report(gitlogin)
 
     return render_template('table6.html', langs=search, data=report)

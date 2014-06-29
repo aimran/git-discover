@@ -39,9 +39,7 @@
               type="text" placeholder="Type location">
             </div>
         </div>
-    
       -->
-
 
         <div class="form-group">
           <div class="text-center">
@@ -83,11 +81,12 @@
 $(function(){
    $('#language-input').select2({
       createSearchChoice: function() { return null; },
-      tags:["Python", "C", "C++", "Java", "Scala", "SQL"],
+      tags:["Python", "C", "C++", "Java", "Scala", "SQL","Arduino",
+      'Erlang','IDL', 'Erlang', 'Haskell', 'Julia', 'Objective-C', 'Go','C#',
+      'COBOL', 'FORTRAN','R','Swift', 'Verilog', 'VHDL'],
       width: "copy",
       tokenSeparators: [",", " "],
       matcher: function(term, text) {
-      console.log(term, text);
       return text.indexOf(term)==0;
       }
     });
