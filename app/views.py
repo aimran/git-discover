@@ -54,7 +54,7 @@ def results(search):
     score = GitScore(db)
     final_score = score.get_final_score(search).sort("final_score", ascending=False)
     report = OrderedDict()
-    for gitlogin in final_score.index[:35]:
+    for gitlogin in final_score.index[:15]:
         report[gitlogin] = generate_report(gitlogin)
 
     return render_template('results.html', langs=search, data=report)
