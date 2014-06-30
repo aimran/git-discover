@@ -20,7 +20,7 @@ class GitDB(object):
 
     def __init__(self, min_repo=10, max_repo=50, min_star=2, min_fork=2, min_rpm=0.3):
         self.cnx = pymysql.connect(host=access_keys.hostname,
-                user=access_keys.user,
+                user=access_keys.user, port=3306,
                 passwd=access_keys.password, db=access_keys.dbname)
         self.cnx.ping(reconnect=True)
         self.cursor = self.cnx.cursor()
