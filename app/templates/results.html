@@ -5,12 +5,19 @@
 
   <div class="col-md-5 hidden-sm hidden-xs hidden-md">
     <div id="octo-speak">
+      <div id="octo-says" class="col-md-12">
       {% if data %}
-      Based on your preferences for <i>{{langs|join(', ')}}</i>
+      <span>Based on your preferences for <i>{{langs|join(', ')}}</i>
       here are some of the top Github contributors that may interest you...
+      </span>
       {% else %}
       Please broaden your search to find more results!
       {% endif %}
+      <div id="explore" class="col-md-12">
+        <a href="{{url_for('network')}}" target="_blank" style="text-decoration: none;
+          color: #428bca;">Explore the Graph</a>
+      </div>
+    </div>
     </div>
   </div>
 

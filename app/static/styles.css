@@ -59,12 +59,17 @@ html, body {
   margin-right: 80px;
   padding: 30px;
   border-radius:10px;
-  height: 210px;
+  height: 250px;
   color: color;
   font-family: "Droid Serif", serif;
   font-size: 20px;
   line-height: 28px;
   
+}
+
+#explore.col-md-12{
+  margin-top:15px;
+
 }
 
 span#message{

@@ -10,7 +10,7 @@
   "text": {
     "title": "Network Map of Programming Language of Choice",
     "more": "",
-    "intro": "Network map of programming language of choice for the more highly connected group of Github users."
+    "intro": "Network map of programming language of choice for the more highly connected group of Github users. The size of the nodes indicate total stars per repo aka usefullness."
   },
   "legend": {
     "edgeLabel": "Following Between Pairs of Github Users",

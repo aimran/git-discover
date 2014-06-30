@@ -60,14 +60,16 @@ class GitDB(object):
     def query_pub_repo_count(self):
         query = """select login, public_repo_count
                 from users
-                where public_repo_count > {0} and public_repo_count < {1};
+                where public_repo_count > {0} and public_repo_count < {1} and
+                is_person=1;
                 """.format(self.min_repo, self.max_repo)
         return query
 
     def query_distinct_users(self):
         query = """select distinct(login)
                 from users
-                where public_repo_count > {0} and public_repo_count < {1};
+                where public_repo_count > {0} and public_repo_count < {1} and
+                is_person=1;
                 """.format(self.min_repo, self.max_repo)
         return query
 

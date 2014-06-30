@@ -57,7 +57,7 @@ def results(search):
     for gitlogin in final_score.index[:35]:
         report[gitlogin] = generate_report(gitlogin)
 
-    return render_template('table6.html', langs=search, data=report)
+    return render_template('results.html', langs=search, data=report)
     #return render_template('table.html', data=data)
 
 @app.route('/author')
@@ -91,7 +91,7 @@ def datetimefilter(value, format="%B %d, %Y"):
     return value.strftime(format)
 
 @app.route('/network')
-def show_cluster_network():
+def network():
     # Renders network.html.
     return render_template('network.html')
 
