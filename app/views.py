@@ -90,4 +90,8 @@ def not_found(error):
 def datetimefilter(value, format="%B %d, %Y"):
     return value.strftime(format)
 
+@app.route('/network')
+def show_cluster_network():
+    # Renders network.html.
+    return render_template('network.html')
 

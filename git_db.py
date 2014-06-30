@@ -174,7 +174,7 @@ class GitDB(object):
     def query_language_of_choice(self, login):
         query = """
                 select language, count(*) as cnt from (select login, language
-                from repos where login='{0}') as x group by language
+                from repos where login='{0}' and language is not null) as x group by language
                 order by cnt desc;
                 """.format(login)
         return query
@@ -296,6 +296,7 @@ class GitDB(object):
         pgrank_frame = None
         if create:
             self.graph = self.get_graph()
+            nx.write_gpickle(self.graph, 'github_cnx.gpcl')
             pgrank_frame = pd.DataFrame.from_dict(nx.pagerank(self.graph), orient='index')
             pgrank_frame.rename(columns={0:'pagerank'}, inplace=True)
             pgrank_frame.index.name = 'login'

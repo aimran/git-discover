@@ -1,0 +1,53 @@
+{
+  "type": "network",
+  "version": "1.0",
+  "data": "static/network/data.json",
+  "logo": {
+    "text": "Asif Imran",
+    "file": "",
+    "link": ""
+  },
+  "text": {
+    "title": "Network Map of Programming Language of Choice",
+    "more": "",
+    "intro": "Network map of programming language of choice for the more highly connected group of Github users."
+  },
+  "legend": {
+    "edgeLabel": "Following Between Pairs of Github Users",
+    "colorLabel": "Programming Language of Choice",
+    "nodeLabel": "Github users"
+  },
+  "features": {
+    "search": true,
+    "groupSelectorAttribute": "pref_lang",
+    "hoverBehavior": "dim"
+  },
+  "informationPanel": {
+    "imageAttribute": "name",
+    "groupByEdgeDirection": false
+  },
+  "sigma": {
+    "graphProperties": {
+      "minEdgeSize": 0.2,
+      "maxNodeSize": 7,
+      "maxEdgeSize": 0.5,
+      "minNodeSize": 1
+    },
+    "drawingProperties": {
+      "labelThreshold": 10,
+      "hoverFontStyle": "bold",
+      "defaultEdgeType": "curve",
+      "defaultLabelColor": "#000",
+      "defaultLabelHoverColor": "#fff",
+      "defaultLabelSize": 14,
+      "activeFontStyle": "bold",
+      "fontStyle": "bold",
+      "defaultHoverLabelBGColor": "#002147",
+      "defaultLabelBGColor": "#ddd"
+    },
+    "mouseProperties": {
+      "minRatio": 0.75,
+      "maxRatio": 20
+    }
+  }
+}

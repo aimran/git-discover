@@ -1,5 +1,6 @@
 access_keys*
 config.py
+.ipynb_checkpoints
 *.py[cod]
 *.so
 *.pcl
